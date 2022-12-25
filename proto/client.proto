@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option go_package = "/product";
+
+package Spot;
+
+service Auth {
+  rpc Auth(LoginRequest) returns (AuthStruct) {}
+  rpc CheckAuth(AuthStruct) returns (CheckAuthResponse) {}
+  rpc Products(Empty) returns (ProductsResponse) {}
+}
+
+message LoginRequest{
+  string clientID = 1   [json_name = "client_id"];
+  string login = 2      [json_name = "login"];
+  string password = 3   [json_name = "password"];
+
+}
+
+
+message AuthStruct{
+  string  clientID = 1     [json_name = "client_id"];
+  string  authToken = 2    [json_name = "auth_token"];
+}
+
+message ProductsResponse{
+  repeated Product  products = 1 [json_name = "products"];
+}
+
+message Product{
+  string id = 1    [json_name = "id"];
+  double price = 2 [json_name = "price"];
+  int64 qty = 3    [json_name = "qty"];
+}
+
+message CheckAuthResponse{
+  int64 status = 1     [json_name = "status"];
+}
+message Empty{}
